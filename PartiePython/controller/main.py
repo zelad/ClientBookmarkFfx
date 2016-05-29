@@ -14,8 +14,15 @@ import os
 
 from NodeBookM import NodeBookM
 
-global switch
-global NodeBookM
+# global switch
+# global NodeBookM
+
+def getNodeBookM(listNodesBookM):
+    dictObjNodeBookM = dict()
+    for node in listNodesBookM:
+        strNode = str(node['guid'])
+        dictObjNodeBookM[strNode] = NodeBookM(node)
+    return dictObjNodeBookM
 
 def getJson(file):
     with open(file) as data_file:#test de lecture de sav FireFox 
@@ -72,11 +79,11 @@ if __name__ == "__main__":
         "login":doLogin
     }
 # Initialisation des models
-    node = NodeBookM()
+#     node = NodeBookM()
     # Récupération du Json
     jsonData = getJson('bookmarks.json')
-    barPersonal = jsonData['children'][14]
-    print barPersonal
+    barPersonal = jsonData['children'][14]['children']
+    getNodeBookM(barPersonal)
     
 # Connexion au client web
     server = WebsocketServer(9999)
