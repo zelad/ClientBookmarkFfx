@@ -19,25 +19,37 @@ class NodeBookM(object):
 #         self.prenom = ""
         
         self.title = ""
-        self.type = ""
+        self.type = node['type']
         
-        self.index = -1
-        self.dateAdded = -1
-        self.lastModified = -1
-        self.id = -1
+        self.index = node['index']
+        self.dateAdded = node['dateAdded']
+        self.lastModified = node['lastModified']
+        self.id = node['id']
         
         self.uri = ""
         self.tags = ""
         
-        self.annos = dict()
-        self.children = dict()
-#@ICI compléter en fonction du type de node
+        self.annos = list()#A déterminer si je vais m en servir ou pas...
+        self.children = list()
         
-        if node['type'].find('text/x-moz-place-container') != -1:
+        if self.type.find('text/x-moz-place-container') != -1:
+        #Ici nous avons un dossier
+            self.title = node['title']
+            if node.has_key('children'):
+                for node in node['children']:
+                    self.children.append(NodeBookM(node))
+            
+        elif self.type.find('text/x-moz-place-separator') != -1:
+        #Ici un séparateur
             pass
-        elif node['type'].find('text/x-moz-place-separator') != -1:
-            pass
-        elif node['type'].find('text/x-moz-place') != -1: 
-            pass
+        
+#         elif node['type'].find('text/x-moz-place') != -1:
+        elif self.type.find('text/x-moz-place') != -1:
+        #Et ici un favoris 
+            self.title = node['title']
+            if node.has_key('uri'):
+                self.uri = node['uri']
+            if node.has_key('tags'):
+                self.tags = node['tags']
         else:
             print ('soucis dans le décodage des "NodeBookM"')

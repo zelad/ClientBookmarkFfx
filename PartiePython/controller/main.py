@@ -19,6 +19,7 @@ from NodeBookM import NodeBookM
 
 def getNodeBookM(listNodesBookM):
     dictObjNodeBookM = dict()
+# @ICI changer la clef "guid" par "index" ou utiliser une liste??!
     for node in listNodesBookM:
         strNode = str(node['guid'])
         dictObjNodeBookM[strNode] = NodeBookM(node)
@@ -84,6 +85,7 @@ if __name__ == "__main__":
     jsonData = getJson('bookmarks.json')
     barPersonal = jsonData['children'][14]['children']
     getNodeBookM(barPersonal)
+    print "test"
     
 # Connexion au client web
     server = WebsocketServer(9999)
