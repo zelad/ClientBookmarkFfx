@@ -57,8 +57,6 @@ def new_client(client, server):
     global wsIHM
     wsIHM = client
     print "client connecte"
-# ex de broadcast:
-    tx2All(); 
     
 def rxMessage(client, server, message):
 #     print message
@@ -69,9 +67,6 @@ def clientLeft(client, server):
     print client
     print "est partie"
     
-def tx2All():
-    pass
-#     server.send_message_to_all("Hello tous")
 '''
 Fonction de routage des message entrants
 '''    
@@ -82,18 +77,21 @@ def ihmRouting(message, server):
     func(message, server)
 
 def doLogin(message, server):
-    global NodeBookM
+    global jsonTree
+    global wsIHM
+# Envoie de l arborésence des favoris au Client
+    server.send_message(wsIHM, jsonTree)
 #     obj = ast.literal_eval(message) //pour compatibilité avec Android
 #     print message //aucune idée pourquoi mais il faut mettre cela pour que ça fonctionne avec Android!!?
-    obj = json.loads(message)
-    objLogin = obj["object"]
-    NodeBookM.nom = objLogin["name"]
-    NodeBookM.prenom = objLogin["firstname"]
+#     obj = json.loads(message)
+#     objLogin = obj["object"]
+#     NodeBookM.nom = objLogin["name"]
+#     NodeBookM.prenom = objLogin["firstname"]
     #Ack client
-    dict={}
-    dict["messageType"]="ackLogin"
-    objJson = json.dumps(dict)
-    server.send_message(wsIHM, objJson)
+#     dict={}
+#     dict["messageType"]="ackLogin"
+#     objJson = json.dumps(dict)
+#     server.send_message(wsIHM, objJson)
     
 if __name__ == "__main__":
 # Fixation du point de lecture de fichier
@@ -110,6 +108,7 @@ if __name__ == "__main__":
     #Passage en Json pour envoie au client
     dictTree = dict()
     dictTree['treeBookMark'] = tree
+    dictTree['messageType'] = "treeForShow"
     jsonTree = json.dumps(dictTree)
 #     jsonToDictForTest = json.loads(jsonTree)
     
@@ -120,5 +119,4 @@ if __name__ == "__main__":
     server.set_fn_client_left(clientLeft) #définition de la fonction pour la déconnexion d'un client
     
     server.run_forever()
-    
-# Envoie de l arborésence des favoris au Client
+
