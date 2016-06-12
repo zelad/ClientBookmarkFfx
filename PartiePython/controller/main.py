@@ -16,14 +16,37 @@ from NodeBookM import NodeBookM
 
 # global switch
 # global NodeBookM
-
+def serialTreeNode(node):
+        dictTreeNode = dict()
+        children = list()
+        
+        if node['type'].find('text/x-moz-place-container') != -1:
+        #Ici nous avons un dossier
+            dictTreeNode['label'] = node['title']
+            if node.has_key('children'):
+                for node in node['children']:
+                    children.append(serialTreeNode(node))
+                dictTreeNode['children'] = children
+        elif node['type'].find('text/x-moz-place-separator') != -1:
+            dictTreeNode['label'] = "___"
+        elif node['type'].find('text/x-moz-place') != -1:
+            dictTreeNode['label'] = node['title']
+        return dictTreeNode
+    
 def getNodeBookM(listNodesBookM):
-    dictObjNodeBookM = dict()
+#     dictObjNodeBookM = dict()
+    listObjNodeBookM = list()
+    listObjNodeTree = list()
 # @ICI changer la clef "guid" par "index" ou utiliser une liste??!
     for node in listNodesBookM:
-        strNode = str(node['guid'])
-        dictObjNodeBookM[strNode] = NodeBookM(node)
-    return dictObjNodeBookM
+    #version dico
+#         strNode = str(node['guid'])
+#         dictObjNodeBookM[strNode] = NodeBookM(node)
+    #version Liste
+        listObjNodeBookM.append(NodeBookM(node))
+#         listObjNodeTree.append(NodeTree(node))#cela est "compliqué" à sérialiser en JSON...
+        listObjNodeTree.append(serialTreeNode(node))
+    return listObjNodeBookM, listObjNodeTree
 
 def getJson(file):
     with open(file) as data_file:#test de lecture de sav FireFox 
@@ -80,12 +103,15 @@ if __name__ == "__main__":
         "login":doLogin
     }
 # Initialisation des models
-#     node = NodeBookM()
     # Récupération du Json
     jsonData = getJson('bookmarks.json')
     barPersonal = jsonData['children'][14]['children']
-    getNodeBookM(barPersonal)
-    print "test"
+    nodesBM, tree = getNodeBookM(barPersonal)
+    #Passage en Json pour envoie au client
+    dictTree = dict()
+    dictTree['treeBookMark'] = tree
+    jsonTree = json.dumps(dictTree)
+#     jsonToDictForTest = json.loads(jsonTree)
     
 # Connexion au client web
     server = WebsocketServer(9999)
@@ -94,3 +120,5 @@ if __name__ == "__main__":
     server.set_fn_client_left(clientLeft) #définition de la fonction pour la déconnexion d'un client
     
     server.run_forever()
+    
+# Envoie de l arborésence des favoris au Client

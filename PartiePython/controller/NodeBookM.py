@@ -15,9 +15,7 @@ class NodeBookM(object):
         '''
         Constructor
         '''
-#         self.nom = ""
-#         self.prenom = ""
-        
+    #partie propre à la récupération du bookMark FF
         self.title = ""
         self.type = node['type']
         
@@ -43,7 +41,6 @@ class NodeBookM(object):
         #Ici un séparateur
             pass
         
-#         elif node['type'].find('text/x-moz-place') != -1:
         elif self.type.find('text/x-moz-place') != -1:
         #Et ici un favoris 
             self.title = node['title']
