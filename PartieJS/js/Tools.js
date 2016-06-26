@@ -20,8 +20,8 @@ var rxTools = {
         
 };
 var manageRxTree = {
-		getTree: function (scope,jsonData){
-			scope.majCatego(jsonData.treeBookMark);
-		}//,
+	getTree: function (scope,jsonData){
+		scope.majCatego(jsonData.treeBookMark);
+	}//,
 }
 
