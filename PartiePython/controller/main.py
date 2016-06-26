@@ -43,8 +43,9 @@ def getNodeBookM(listNodesBookM):
 #         strNode = str(node['guid'])
 #         dictObjNodeBookM[strNode] = NodeBookM(node)
     #version Liste
+        #Création des objets node, contenant tous les infos des favoris
         listObjNodeBookM.append(NodeBookM(node))
-#         listObjNodeTree.append(NodeTree(node))#cela est "compliqué" à sérialiser en JSON...
+        #Version sérialisé pour transmission au client
         listObjNodeTree.append(serialTreeNode(node))
     return listObjNodeBookM, listObjNodeTree
 
