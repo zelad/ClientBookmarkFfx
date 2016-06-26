@@ -2,8 +2,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Template Angular</title>
-	<script src="lib/angular/angular.js"></script>
+<title>Le Labo</title>
+    
+    <link rel="stylesheet" href="css/abn_tree.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+ 	<script src="lib/angular/angular.min.js"></script>
+	<script src="lib/angular/angular-animate.min.js"></script>
+	<script src="lib/abn_tree_directive.js"></script>
 	
 	<script src="js/app.js"></script>
 	<script src="js/controller.js"></script>
@@ -15,8 +22,8 @@
 
 <body ng-app="uneApp">
 	<div ng-controller="uneFonctionCtrl" >
-	
-	
+	  
+	  <abn-tree tree-data="data"></abn-tree>  
 	</div>
 </body>
 </html>

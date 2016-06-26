@@ -5,9 +5,9 @@ app.factory('WebSocketService',['$q','$rootScope',
                                                      function($q, $rootScope) {
 	// Nous retournons cet objet pour toutes les injection de notre service
     var Service = {};
-    // Garde toutes les requÃªtes en attente ici, jusqu'à  ce qu'elles obtiennent une réponse
+    // Garde toutes les requÃªtes en attente ici, jusqu'ï¿½ ce qu'elles obtiennent une rï¿½ponse
     var callbacks = {};
-    // Crée un unique "callback ID" pour tracer/lier les requÃªtes et les réponses
+    // Crï¿½e un unique "callback ID" pour tracer/lier les requÃªtes et les rï¿½ponses
     var currentCallbackId = 0;
 
     
@@ -24,7 +24,7 @@ app.factory('WebSocketService',['$q','$rootScope',
       return defer.promise;
     }
 
-    // Ceci crée un nouveau "callback ID" pour la requÃªt
+    // Ceci crÃ©e un nouveau "callback ID" pour la requÃªt
     function getCallbackId() {
       currentCallbackId += 1;
       if(currentCallbackId > 10000) {
@@ -39,20 +39,20 @@ app.factory('WebSocketService',['$q','$rootScope',
         var request = {
             sendType: sendID
         };
-        request.object = object;//Pour ajouter un parametre a l objet "request"
+        request.object = object;//Pour ajouter un parametre Ã  l objet "request"
         
         var promise = sendRequest(request);
         return promise;
     };
     
 /**
- * une erreur pour tester la réponse du serveur...
+ * une erreur pour tester la rï¿½ponse du serveur...
  */
     Service.sendError = function() {
       var request = {
         type: "une betise..."
       };
-      // Stocké dans une variable pour plus de clarté sur ce que "sendRequest retourne
+      // Stockï¿½ dans une variable pour plus de clartï¿½ sur ce que "sendRequest retourne
       var promise = sendRequest(request); 
       return promise;
     };
