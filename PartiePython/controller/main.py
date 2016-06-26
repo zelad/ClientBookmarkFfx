@@ -11,11 +11,24 @@ Created on 15 janv. 2016
 from websocket_server import WebsocketServer
 import json
 import os
+import sqlite3 as lite
+import sys
 
 from NodeBookM import NodeBookM
 
 # global switch
 # global NodeBookM
+def laboSQLite(node):
+    con = lite.connect('bookMark.db')
+# @ICI: remplire la DB avec les éléments de la base Json
+    with con:
+        
+        cur = con.cursor()
+    #Ci Dessous: on va pas se faire kiki je vais utiliser "SQLite Manager" Add-on de FireFox!! 
+        #cur.execute("CREATE TABLE bookMarks(Guid TEXT, Name TEXT, Price INT)")
+        cur.execute("INSERT INTO Cars VALUES(1,'Audi',52642)")
+    
+
 def serialTreeNode(node):
         dictTreeNode = dict()
         children = list()
@@ -37,7 +50,6 @@ def getNodeBookM(listNodesBookM):
 #     dictObjNodeBookM = dict()
     listObjNodeBookM = list()
     listObjNodeTree = list()
-# @ICI changer la clef "guid" par "index" ou utiliser une liste??!
     for node in listNodesBookM:
     #version dico
 #         strNode = str(node['guid'])
