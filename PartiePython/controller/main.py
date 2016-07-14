@@ -18,16 +18,34 @@ from NodeBookM import NodeBookM
 
 # global switch
 # global NodeBookM
+def setDB(node,con):
+    #@ICI: commencons par les dossiers
+    if node['type'].find('text/x-moz-place-container') != -1:
+    #Ici nous avons un dossier
+#         dictTreeNode['label'] = node['title']
+        if node.has_key('children'):
+            for node in node['children']:
+                pass
+#                 children.append(serialTreeNode(node))
+#             dictTreeNode['children'] = children
+    elif node['type'].find('text/x-moz-place-separator') != -1:
+    #ici nous avons un séparateur
+        pass
+    elif node['type'].find('text/x-moz-place') != -1:
+    #et ici un favoris, "bookMark" pour la base
+        pass
+    
 def laboSQLite(node):
     con = lite.connect('bookMark.db')
-# @ICI: remplire la DB avec les éléments de la base Json
-    with con:
-        
-        cur = con.cursor()
-    #Ci Dessous: on va pas se faire kiki je vais utiliser "SQLite Manager" Add-on de FireFox!! 
-        #cur.execute("CREATE TABLE bookMarks(Guid TEXT, Name TEXT, Price INT)")
-        cur.execute("INSERT INTO Cars VALUES(1,'Audi',52642)")
-    
+    setDB(node, con)
+#<unExemple>
+#     with con:
+#         cur = con.cursor()
+#     #Ci Dessous: on va pas se faire kiki je vais utiliser "SQLite Manager" Add-on de FireFox!! 
+#         #cur.execute("CREATE TABLE bookMarks(Guid TEXT, Name TEXT, Price INT)")
+#         cur.execute("INSERT INTO Cars VALUES(1,'Audi',52642)")
+#</unExemple>
+
 
 def serialTreeNode(node):
         dictTreeNode = dict()
