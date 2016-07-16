@@ -18,16 +18,16 @@ from NodeBookM import NodeBookM
 
 # global switch
 # global NodeBookM
-def setDB(node,con):
-    #@ICI: commencons par les dossiers
+def setDB(node,cur):
+    
     if node['type'].find('text/x-moz-place-container') != -1:
     #Ici nous avons un dossier
+#@ICI: construire un string avec les champs correspondant à la ligne ci-dessous
+        cur.execute("INSERT INTO folder (title, position, dateAdded, lastModified, parent) VALUES ()")
 #         dictTreeNode['label'] = node['title']
         if node.has_key('children'):
             for node in node['children']:
-                pass
-#                 children.append(serialTreeNode(node))
-#             dictTreeNode['children'] = children
+                setDB(node, cur)
     elif node['type'].find('text/x-moz-place-separator') != -1:
     #ici nous avons un séparateur
         pass
@@ -37,7 +37,9 @@ def setDB(node,con):
     
 def laboSQLite(node):
     con = lite.connect('bookMark.db')
-    setDB(node, con)
+    with con:
+        cur = con.cursor()
+        setDB(node, cur)
 #<unExemple>
 #     with con:
 #         cur = con.cursor()
