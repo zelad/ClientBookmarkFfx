@@ -22,6 +22,7 @@ def setDB(node,cur):
     
     if node['type'].find('text/x-moz-place-container') != -1:
     #Ici nous avons un dossier
+    #TEMP: un p tit test pour gitLab
 #@ICI: construire un string avec les champs correspondant à la ligne ci-dessous
         cur.execute("INSERT INTO folder (title, position, dateAdded, lastModified, parent) VALUES ()")
 #         dictTreeNode['label'] = node['title']
